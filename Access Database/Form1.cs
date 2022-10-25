@@ -33,6 +33,7 @@ namespace Access_Database
         private void Form1_Load(object sender, EventArgs e)
         {
             LlenarGrid();
+            //textBox1.Enabled = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -42,8 +43,42 @@ namespace Access_Database
             cmd.ExecuteNonQuery();
             conn.Close();
             MessageBox.Show("Registro exitosamente guardado.");
-            //limpiar texto();
+            limpiarTexto();
             LlenarGrid();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+        void limpiarTexto()
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            conn.Open();
+            OleDbCommand cmd = new OleDbCommand("delete from TablaPersona where Id=" + textBox1.Text + " ", conn);
+            cmd.ExecuteNonQuery();
+            conn. Close();
+            MessageBox.Show("Registro eliminado.");
+            limpiarTexto();
+            LlenarGrid();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            conn.Open();
+            OleDbCommand cmd = new OleDbCommand("update TablaPersona set Nombre='" + textBox2.Text + "', Edad=" + textBox3.Text + " where Id=" + textBox1.Text + " ", conn);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            MessageBox.Show("Registro actualizado.");
+            limpiarTexto();
+            LlenarGrid();
+
         }
     }
 }
